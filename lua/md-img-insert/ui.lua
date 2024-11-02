@@ -25,15 +25,37 @@ function M.create_tooltip_window(config)
       return
     end
 
-    local selected_idx = vim.api.nvim_win_get_cursor(tooltip_win)[1]
-    if images[selected_idx] then
-      local img = images[selected_idx]
+    local selected = vim.api.nvim_win_get_cursor(tooltip_win)[1]
+    if images[selected] then
+      local img = images[selected]
 
       local markdown = string.format('![%s](%s)', img.name, img.url)
       vim.api.nvim_win_close(tooltip_win, true)
       vim.api.nvim_set_current_win(original_win)
       vim.api.nvim_set_current_line(markdown)
     end
+  end
+
+  local function insert_multiple_at_cursor()
+    vim.api.nvim_set_option_value('modifiable', true, { buf = tooltip_buf })
+
+    if locked_and_loading then
+      return
+    end
+
+    -- Getting lines in visual mode isn't at straightforward
+    local _, start_line, _ = unpack(vim.fn.getpos('v'))
+    local _, end_line, _ = unpack(vim.fn.getpos('.'))
+
+    local lines = {}
+    for i = start_line, end_line do
+      local img = images[i]
+      table.insert(lines, string.format('![%s](%s)', img.name, img.url))
+    end
+
+    vim.api.nvim_win_close(tooltip_win, true)
+    vim.api.nvim_set_current_win(original_win)
+    vim.api.nvim_paste(table.concat(lines, '\n'), true, -1)
   end
 
   local function set_buffer_lines_and_fit(lines)
@@ -69,10 +91,10 @@ function M.create_tooltip_window(config)
     for _, img in ipairs(images) do
       local path_offset = max_width_name - #img.name + 5
 
-      local markdown = string.format('- %s%s(%s%s)', img.name, string.rep(' ', path_offset), config.base_url, img.filePath)
+      local element = string.format('- %s%s(%s%s)', img.name, string.rep(' ', path_offset), config.base_url, img.filePath)
 
-      table.insert(lines, markdown)
-      max_width_markdown = math.max(max_width_markdown, #markdown)
+      table.insert(lines, element)
+      max_width_markdown = math.max(max_width_markdown, #element)
     end
 
     vim.api.nvim_buf_set_lines(tooltip_buf, 0, -1, false, lines)
@@ -109,6 +131,7 @@ function M.create_tooltip_window(config)
   vim.keymap.set('n', 'q', close, km_opts)
   vim.keymap.set('n', '<Esc>', close, km_opts)
   vim.keymap.set('n', '<CR>', insert_at_cursor, km_opts)
+  vim.keymap.set('v', '<CR>', insert_multiple_at_cursor, km_opts)
   vim.keymap.set('n', 'r', function()
     locked_and_loading = true
     show_loading()
