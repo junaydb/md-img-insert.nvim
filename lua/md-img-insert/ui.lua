@@ -29,7 +29,7 @@ function M.create_tooltip_window(config)
     if images[selected] then
       local img = images[selected]
 
-      local markdown = string.format('![%s](%s)', img.name:gsub('%.%w+$', ''), img.url)
+      local markdown = string.format('![%s](%s%s)', img.name:gsub('%.%w+$', ''), config.base_url, img.filePath)
 
       vim.api.nvim_win_close(tooltip_win, true)
       vim.api.nvim_set_current_win(original_win)
@@ -55,7 +55,7 @@ function M.create_tooltip_window(config)
     local lines = {}
     for i = start_line, end_line do
       local img = images[i]
-      table.insert(lines, string.format('![%s](%s)', img.name:gsub('%.%w+$', ''), img.url))
+      table.insert(lines, string.format('![%s](%s%s)', img.name:gsub('%.%w+$', ''), config.base_url, img.filePath))
     end
 
     vim.api.nvim_win_close(tooltip_win, true)
