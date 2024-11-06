@@ -43,7 +43,7 @@ function M.fetch(use_cache, config, success_cb, error_cb, set_job)
 
       vim.schedule(function()
         vim.fn.writefile(result, config.cache_path)
-        print('Cache written to (' .. config.cache_path .. ')')
+        print('Cache written to ' .. config.cache_path)
       end)
 
       fetch_job = nil
