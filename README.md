@@ -1,8 +1,10 @@
-**md-img-insert.nvim**: insert images in markdown syntax with ease.
+![md-img-insert-ss](https://github.com/user-attachments/assets/b6f8fcf1-9a77-4b2c-aa39-b7001cd3fc23)
 
-- Fetches markdown images (currently just works with imagekit)
+**md-img-insert.nvim**: Quickly insert markdown formatted image links with Neovim.
+
+- Fetches image links from an endpoint (currently just works with ImageKit)
 - Image paths are displayed in a floating window at the cursor
-- Select an image (or multiple in visual mode) and it gets inserted in markdown syntax
+- Select an image (or multiple in visual mode) to insert it in markdown syntax
 - Fetch results are cached and can be refreshed with `r`
 
 ## Install
@@ -19,6 +21,15 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
   opts = {},
 }
 ```
+
+## Setup
+
+This plugin currently only works with [ImageKit](https://imagekit.io/).
+
+Set the following environment variables:
+
+- `MD_IMG_INSERT_BASE_URL`: Your ImageKit endpoint's base URL
+- `MD_IMG_INSERT_API_KEY`: Your ImageKit private API key
 
 ## Usage
 
