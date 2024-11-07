@@ -2,7 +2,7 @@
 
 - Fetches markdown images (currently just works with imagekit)
 - Image paths are displayed in a floating window at the cursor
-- Select an image (or mulitple in visual mode) and it gets inserted in markdown syntax
+- Select an image (or multiple in visual mode) and it gets inserted in markdown syntax
 - Fetch results are cached and can be refreshed with `r`
 
 ## Install
