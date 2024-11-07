@@ -38,8 +38,6 @@ function M.create_tooltip_window(config)
   end
 
   local function insert_multiple_at_cursor()
-    vim.api.nvim_set_option_value('modifiable', true, { buf = tooltip_buf })
-
     if locked_and_loading then
       return
     end
