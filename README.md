@@ -1,4 +1,4 @@
-![md-img-insert-ss](https://github.com/user-attachments/assets/b6f8fcf1-9a77-4b2c-aa39-b7001cd3fc23)
+![md-img-insert-ss](https://github.com/user-attachments/assets/1a76257f-e629-4036-911e-531b7198d845)
 
 **md-img-insert.nvim**: Quickly insert markdown formatted image links with Neovim.
 
